@@ -99,26 +99,26 @@ def text_image_preprocessing_train(image):
 def load_trainset_batchfnames_origin(filepath, batch_size, usetrainnum=708, trainnum=100000):
     paths = os.listdir(filepath)
     stylenum = len(paths)
-    trainnum = (trainnum / batch_size / 2) * batch_size * 2
+    trainnum = (trainnum // batch_size // 2) * batch_size * 2
     fnames = ['%s.png' % (i % usetrainnum+1) for i in range(trainnum)]
-    pathid = [(i % stylenum) for i in range(trainnum/2)]
+    pathid = [(i % stylenum) for i in range(trainnum//2)]
     random.shuffle(pathid)
     random.shuffle(fnames)
-    trainbatches = [([]) for _ in range(trainnum/batch_size/2)]
-    for i in range(trainnum/batch_size/2):
+    trainbatches = [([]) for _ in range(trainnum//batch_size//2)]
+    for i in range(trainnum//batch_size//2):
         traindatas = []
         for j in range(batch_size):
             ii = i * batch_size + j * 2
-            # traindatas += [[os.path.join(filepath, paths[pathid[ii/2]], 'train', fnames[ii]),
-            #                 os.path.join(filepath, paths[pathid[(ii+1)/2]], 'train', fnames[ii+1])]]
-            traindatas += [[os.path.join(filepath, 'train', paths[pathid[ii/2]], fnames[ii]),
-                            os.path.join(filepath, 'train', paths[pathid[(ii+1)/2]], fnames[ii+1])]]
+            # traindatas += [[os.path.join(filepath, paths[pathid[ii//2]], 'train', fnames[ii]),
+            #                 os.path.join(filepath, paths[pathid[(ii+1)//2]], 'train', fnames[ii+1])]]
+            traindatas += [[os.path.join(filepath, 'train', paths[pathid[ii//2]], fnames[ii]),
+                            os.path.join(filepath, 'train', paths[pathid[(ii+1)//2]], fnames[ii+1])]]
         trainbatches[i] += traindatas
     return trainbatches
 
 
 def load_trainset_batchfnames(filepath, batch_size, stylenum=7649):
-    trainnum = (stylenum*26*3 / batch_size / 2) * batch_size * 2
+    trainnum = (stylenum*26*3 // batch_size // 2) * batch_size * 2
     chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
     fnames = []
     for style in range(stylenum):
@@ -127,8 +127,8 @@ def load_trainset_batchfnames(filepath, batch_size, stylenum=7649):
                 fname = str(style) + '_' + str(i) + '_' + char + '.png'
                 fnames.append(fname)
     random.shuffle(fnames)
-    trainbatches = [([]) for _ in range(trainnum/batch_size/2)]
-    for i in range(trainnum/batch_size/2):
+    trainbatches = [([]) for _ in range(trainnum//batch_size//2)]
+    for i in range(trainnum//batch_size//2):
         traindatas = []
         for j in range(batch_size):
             ii = i * batch_size + j * 2
@@ -141,9 +141,9 @@ def load_trainset_batchfnames(filepath, batch_size, stylenum=7649):
 
 
 def load_oneshot_batchfnames(filename, batch_size, trainnum=100000):
-    trainnum = (trainnum / batch_size / 2) * batch_size * 2
-    trainbatches = [([]) for _ in range(trainnum/batch_size/2)]
-    for i in range(trainnum/batch_size/2):
+    trainnum = (trainnum // batch_size // 2) * batch_size * 2
+    trainbatches = [([]) for _ in range(trainnum//batch_size//2)]
+    for i in range(trainnum//batch_size//2):
         traindatas = []
         for j in range(batch_size):
             traindatas += [[filename, filename]]
@@ -165,8 +165,8 @@ def prepare_batch(batchfnames, level=1, jitter=0.0, centercropratio=0.5, augemen
     # level3: input x: 256*256, x2: 128*128
     downsamplerates = [[2**2], [2**1, 2**2], [2**0, 2**1]]
     layernum = len(downsamplerates[level-1])
-    img_wds = [(wd/downsamplerates[level-1][i]) for i in range(layernum)]
-    img_hts = [(ht/downsamplerates[level-1][i]) for i in range(layernum)]
+    img_wds = [(wd//downsamplerates[level-1][i]) for i in range(layernum)]
+    img_hts = [(ht//downsamplerates[level-1][i]) for i in range(layernum)]
 
     centerCrop = transforms.CenterCrop((wd, ht))
     img_list = [([]) for _ in range(layernum)]
@@ -176,7 +176,7 @@ def prepare_batch(batchfnames, level=1, jitter=0.0, centercropratio=0.5, augemen
         img1 = Image.open(fname1)
         img2 = Image.open(fname2)
         ori_wd, ori_ht = img1.size
-        ori_wd = ori_wd / 2
+        ori_wd = ori_wd // 2
         img1_in = img1.crop((0, 0, ori_wd, ori_ht))
         img1_in = text_image_preprocessing_train(img1_in)
         # img1_out = img1.crop((ori_wd, 0, ori_wd*2, ori_ht))
