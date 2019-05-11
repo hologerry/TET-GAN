@@ -163,7 +163,9 @@ def prepare_batch(batchfnames, level=1, jitter=0.0, centercropratio=0.5, augemen
     # level1: input x: 64*64
     # level2: input x: 128*128, x2: 64*64
     # level3: input x: 256*256, x2: 128*128
-    downsamplerates = [[2**2], [2**1, 2**2], [2**0, 2**1]]
+    # downsamplerates = [[2**2], [2**1, 2**2], [2**0, 2**1]]
+    # level1: input x: 64*64
+    downsamplerates = [[2**0]]
     layernum = len(downsamplerates[level-1])
     img_wds = [(wd//downsamplerates[level-1][i]) for i in range(layernum)]
     img_hts = [(ht//downsamplerates[level-1][i]) for i in range(layernum)]
