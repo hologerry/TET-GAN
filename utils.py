@@ -1,7 +1,7 @@
 import torch
 
 from PIL import Image
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 import torchvision.transforms as transforms
 from torch.autograd import Variable
 import numpy as np
@@ -40,10 +40,10 @@ def weights_init(m):
 # view images
 
 
-def visualize(img_arr):
-    plt.imshow(((img_arr.numpy().transpose(1, 2, 0) + 1.0)
-                * 127.5).astype(np.uint8))
-    plt.axis('off')
+# def visualize(img_arr):
+#     plt.imshow(((img_arr.numpy().transpose(1, 2, 0) + 1.0)
+#                 * 127.5).astype(np.uint8))
+#     plt.axis('off')
 
 # load one image in tensor format
 
