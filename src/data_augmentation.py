@@ -1,6 +1,5 @@
 import torch
 
-from PIL import Image
 import torchvision.transforms as transforms
 import numpy as np
 import cv2
@@ -31,7 +30,7 @@ def colorize_two(grayimg1, grayimg2, maxcolornum):
     # color map
     cmap = np.random.randint(0, 255, (colornum+1, 3))
 
-    mx = 256  # if gray.dtype==np.uint8 else 65535
+    # mx = 256  # if gray.dtype==np.uint8 else 65535
     lut = np.empty(shape=(256, 3))
 
     lastval = checkpoints[0]
