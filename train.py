@@ -1,8 +1,8 @@
 from __future__ import print_function
-from src.options import TrainOptions
+from options import TrainOptions
 import torch
-from src.models import TETGAN
-from src.utils import (load_trainset_batchfnames, prepare_batch, weights_init)
+from models import TETGAN
+from utils import (load_trainset_batchfnames, prepare_batch, weights_init)
 import os
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 

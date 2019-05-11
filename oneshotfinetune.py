@@ -1,8 +1,8 @@
 from __future__ import print_function
-from src.options import FinetuneOptions
+from options import FinetuneOptions
 import torch
-from src.models import TETGAN
-from src.utils import load_oneshot_batchfnames, prepare_batch
+from models import TETGAN
+from utils import load_oneshot_batchfnames, prepare_batch
 import os
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 

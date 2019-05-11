@@ -19,11 +19,11 @@ class TestOptions():
         self.parser.add_argument(
             '--name', type=str, default='output.png', help='file name of the outputs')
         self.parser.add_argument(
-            '--result_dir', type=str, default='../output/', help='path for saving result images')
+            '--result_dir', type=str, default='output/', help='path for saving result images')
 
         # model related
         self.parser.add_argument(
-            '--model', type=str, default='../save/tetgan-aaai.ckpt', help='specify the model name to load')
+            '--model', type=str, default='save/tetgan-aaai.ckpt', help='specify the model name to load')
         self.parser.add_argument(
             '--gpu', type=int, default=1, help='gpu, 0 for cpu, 1 for gpu')
 

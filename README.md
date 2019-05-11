@@ -1,4 +1,4 @@
-<img src="https://github.com/williamyang1991/TET-GAN/blob/master/imgs/teaser.png" width="80%" height="80%">
+<img src="imgs/teaser.png" width="80%" height="80%">
 
 # TET-GAN
 
@@ -35,7 +35,7 @@ cd TET-GAN/src
 - Style Transfer with default parameters
   - Results can be found in `../output/`
 
-<img src="https://github.com/williamyang1991/TET-GAN/blob/master/imgs/example.jpg" width="50%" height="50%">
+<img src="imgs/example.jpg" width="50%" height="50%">
 
 ```
 python test.py
@@ -68,7 +68,7 @@ dataset/style2/train/2.png
 ```
   - The training image consists of a text image and a style image as follows
  
- <img src="https://github.com/williamyang1991/TET-GAN/blob/master/data/oneshotstyle/1-train.png" width="30%" height="30%">
+ <img src="data/oneshotstyle/1-train.png" width="30%" height="30%">
 
 - Train TET-GAN with default parameters
 ```

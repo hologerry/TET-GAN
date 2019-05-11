@@ -1,7 +1,7 @@
-from src.options import TestOptions
+from options import TestOptions
 import torch
-from src.models import TETGAN
-from src.utils import load_image, to_data, to_var, save_image
+from models import TETGAN
+from utils import load_image, to_data, to_var, save_image
 import os
 os.environ["CUDA_VISIBLE_DEVICES"] = "7"
 

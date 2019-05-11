@@ -8,7 +8,7 @@ import numpy as np
 import cv2
 import scipy.ndimage as pyimg
 import os
-from src.data_augmentation import generate_styles
+from data_augmentation import generate_styles
 import random
 
 
