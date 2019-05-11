@@ -32,7 +32,8 @@ def main():
     tetGAN.train()
 
     print('--- training ---')
-    train_size = os.listdir(os.path.join(opts.train_path, opts.dataset_class))
+    dataset_path = os.path.join(opts.train_path, opts.dataset_class)
+    train_size = os.listdir(dataset_path)
     print('List of %d styles:' % (len(train_size)), *train_size, sep=' ')
 
     if opts.progressive == 1:
@@ -86,7 +87,7 @@ def main():
         # directly train on level3 256*256
         # directly train on level1 64*64
         for i in range(outer_iter):
-            fnames = load_trainset_batchfnames(opts.train_path, batchsize)
+            fnames = load_trainset_batchfnames(dataset_path, batchsize)
             for epoch in range(epochs):
                 for fname in fnames:
                     x, y_real, y = prepare_batch(fname, 1, 1,
