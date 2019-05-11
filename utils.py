@@ -81,10 +81,22 @@ def text_image_preprocessing(filename):
     Img[:, :, 2] = B_channel.astype('uint8')
     return Image.fromarray(Img)
 
+
+def text_image_preprocessing_train(image):
+    Img = np.array(image)
+    BW = Img[:, :, 0] > 127
+    G_channel = pyimg.distance_transform_edt(BW)
+    G_channel[G_channel > 255] = 255
+    B_channel = pyimg.distance_transform_edt(1-BW)
+    B_channel[B_channel > 255] = 255
+    Img[:, :, 1] = G_channel.astype('uint8')
+    Img[:, :, 2] = B_channel.astype('uint8')
+    return Image.fromarray(Img)
+
 # prepare batched filenames of all training data
 
 
-def load_trainset_batchfnames(filepath, batch_size, usetrainnum=708, trainnum=100000):
+def load_trainset_batchfnames_origin(filepath, batch_size, usetrainnum=708, trainnum=100000):
     paths = os.listdir(filepath)
     stylenum = len(paths)
     trainnum = (trainnum / batch_size / 2) * batch_size * 2
@@ -97,8 +109,31 @@ def load_trainset_batchfnames(filepath, batch_size, usetrainnum=708, trainnum=10
         traindatas = []
         for j in range(batch_size):
             ii = i * batch_size + j * 2
-            traindatas += [[os.path.join(filepath, paths[pathid[ii/2]], 'train', fnames[ii]),
-                            os.path.join(filepath, paths[pathid[(ii+1)/2]], 'train', fnames[ii+1])]]
+            # traindatas += [[os.path.join(filepath, paths[pathid[ii/2]], 'train', fnames[ii]),
+            #                 os.path.join(filepath, paths[pathid[(ii+1)/2]], 'train', fnames[ii+1])]]
+            traindatas += [[os.path.join(filepath, 'train', paths[pathid[ii/2]], fnames[ii]),
+                            os.path.join(filepath, 'train', paths[pathid[(ii+1)/2]], fnames[ii+1])]]
+        trainbatches[i] += traindatas
+    return trainbatches
+
+
+def load_trainset_batchfnames(filepath, batch_size, stylenum=7649):
+    trainnum = (stylenum*26*3 / batch_size / 2) * batch_size * 2
+    chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    fnames = []
+    for style in range(stylenum):
+        for i in [1, 2, 3]:
+            for char in chars:
+                fname = str(style) + '_' + str(i) + '_' + char + '.png'
+                fnames.append(fname)
+    random.shuffle(fnames)
+    trainbatches = [([]) for _ in range(trainnum/batch_size/2)]
+    for i in range(trainnum/batch_size/2):
+        traindatas = []
+        for j in range(batch_size):
+            ii = i * batch_size + j * 2
+            traindatas += [[os.path.join(filepath, 'train', fnames[ii]),
+                            os.path.join(filepath, 'train', fnames[ii+1])]]
         trainbatches[i] += traindatas
     return trainbatches
 
@@ -118,7 +153,7 @@ def load_oneshot_batchfnames(filename, batch_size, trainnum=100000):
 # prepare (x,y,y') at target resolution levels
 
 
-def prepare_batch(batchfnames, level=3, jitter=0.0, centercropratio=0.5, augementratio=0.0, gpu=True, wd=256, ht=256):
+def prepare_batch(batchfnames, level=1, jitter=0.0, centercropratio=0.5, augementratio=0.0, gpu=True, wd=256, ht=256):
 
     transform = transforms.Compose([
         transforms.ToTensor(),
@@ -143,9 +178,14 @@ def prepare_batch(batchfnames, level=3, jitter=0.0, centercropratio=0.5, augemen
         ori_wd, ori_ht = img1.size
         ori_wd = ori_wd / 2
         img1_in = img1.crop((0, 0, ori_wd, ori_ht))
-        img1_out = img1.crop((ori_wd, 0, ori_wd*2, ori_ht))
+        img1_in = text_image_preprocessing_train(img1_in)
+        # img1_out = img1.crop((ori_wd, 0, ori_wd*2, ori_ht))
+        img1_out = img1.crop((ori_wd*2, 0, ori_wd*3, ori_ht))
+
         img2_in = img2.crop((0, 0, ori_wd, ori_ht))
-        img2_out = img2.crop((ori_wd, 0, ori_wd*2, ori_ht))
+        img2_in = text_image_preprocessing_train(img2_in)
+        # img2_out = img2.crop((ori_wd, 0, ori_wd*2, ori_ht))
+        img2_out = img2.crop((ori_wd*2, 0, ori_wd*3, ori_ht))
 
         if random.random() < augementratio:
             # use augmented data
@@ -157,7 +197,8 @@ def prepare_batch(batchfnames, level=3, jitter=0.0, centercropratio=0.5, augemen
                 jitter*0.125, jitter*0.125, jitter*0.125, jitter*0.5)
             img1 = colorjitter(img1)
             img2_out = img1.crop((0, 0, ori_wd, ori_ht))
-            img1_out = img1.crop((ori_wd, 0, ori_wd*2, ori_ht))
+            # img1_out = img1.crop((ori_wd, 0, ori_wd*2, ori_ht))
+            img1_out = img1.crop((ori_wd*2, 0, ori_wd*3, ori_ht))
 
         if random.random() <= centercropratio:
             # use center crop

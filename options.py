@@ -7,9 +7,9 @@ class TestOptions():
 
         # data loader related
         self.parser.add_argument(
-            '--style_name', type=str, default='../data/style/26.jpg', help='path of the style image')
+            '--style_name', type=str, default='data/style/26.jpg', help='path of the style image')
         self.parser.add_argument(
-            '--content_name', type=str, default='../data/content/3.png', help='path of the content image')
+            '--content_name', type=str, default='data/content/3.png', help='path of the content image')
         self.parser.add_argument('--c2s', type=int, default=1,
                                  help='translation direction, 1 for stlization, 0 for destylization')
         self.parser.add_argument('--content_type', type=int, default=0,
@@ -42,8 +42,8 @@ class TrainOptions():
 
         # data loader related
         self.parser.add_argument(
-            '--train_path', type=str, default='../data/dataset/', help='path of the training images')
-
+            '--train_path', type=str, default='data/dataset/', help='path of the training images')
+        self.parser.add_argument('--data_class', type=str, required=True, help='dataset class')
         # train related
         self.parser.add_argument('--outer_iter', type=int, default=50,
                                  help='number of iteration for fading in progressive training')
@@ -65,7 +65,7 @@ class TrainOptions():
 
         # model related
         self.parser.add_argument('--save_model_name', type=str,
-                                 default='../save/tetgan.ckpt', help='specify the model name to save')
+                                 default='save/tetgan.ckpt', help='specify the model name to save')
         self.parser.add_argument(
             '--gpu', type=int, default=1, help='gpu, 0 for cpu, 1 for gpu')
 
@@ -84,7 +84,7 @@ class FinetuneOptions():
 
         # data loader related
         self.parser.add_argument(
-            '--style_name', type=str, default='../data/oneshotstyle/1-train.png', help='path of the style image')
+            '--style_name', type=str, default='data/oneshotstyle/1-train.png', help='path of the style image')
 
         # train related
         self.parser.add_argument('--outer_iter', type=int, default=20,
@@ -100,9 +100,9 @@ class FinetuneOptions():
 
         # model related
         self.parser.add_argument('--save_model_name', type=str,
-                                 default='../save/tetgan-oneshot.ckpt', help='specified the model name to save')
+                                 default='save/tetgan-oneshot.ckpt', help='specified the model name to save')
         self.parser.add_argument('--load_model_name', type=str,
-                                 default='../save/tetgan-aaai.ckpt', help='specify the model name to load')
+                                 default='save/tetgan-aaai.ckpt', help='specify the model name to load')
         self.parser.add_argument(
             '--gpu', type=int, default=1, help='gpu, 0 for cpu, 1 for gpu')
 

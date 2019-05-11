@@ -32,8 +32,8 @@ def main():
     tetGAN.train()
 
     print('--- training ---')
-    stylenames = os.listdir(opts.train_path)
-    print('List of %d styles:' % (len(stylenames)), *stylenames, sep=' ')
+    train_size = os.listdir(os.path.join(opts.train_path, opts.dataset_class))
+    print('List of %d styles:' % (len(train_size)), *train_size, sep=' ')
 
     if opts.progressive == 1:
         # proressive training. From level1 64*64, to level2 128*128, to level3 256*256
@@ -84,12 +84,12 @@ def main():
                       % (losses[0], losses[1], losses[2], losses[3], losses[4]))
     else:
         # directly train on level3 256*256
+        # directly train on level1 64*64
         for i in range(outer_iter):
-            fnames = load_trainset_batchfnames(
-                opts.train_path, batchsize, datarange, datasize)
+            fnames = load_trainset_batchfnames(opts.train_path, batchsize)
             for epoch in range(epochs):
                 for fname in fnames:
-                    x, y_real, y = prepare_batch(fname, 3, 1,
+                    x, y_real, y = prepare_batch(fname, 1, 1,
                                                  centercropratio, augementratio, opts.gpu)
                     losses = tetGAN.one_pass(
                         x[0], None, y[0], None, y_real[0], None, 3, 0)
