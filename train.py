@@ -47,8 +47,9 @@ def main():
             print('Lrec: %.3f, Ldadv: %.3f, Ldesty: %.3f, Lsadv: %.3f, Lsty: %.3f'
                   % (losses[0], losses[1], losses[2], losses[3], losses[4]))
 
-    print('--- save ---')
-    torch.save(tetGAN.state_dict(), opts.save_model_name)
+        print('--- save ---')
+        outname = 'save/' + 'epoch' + str(epoch+1) + '_' + opts.save_model_name
+        torch.save(tetGAN.state_dict(), outname)
 
 
 if __name__ == '__main__':
