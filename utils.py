@@ -132,8 +132,8 @@ def load_trainset_batchfnames(filepath, batch_size, stylenum=7649):
         traindatas = []
         for j in range(batch_size):
             ii = i * batch_size + j * 2
-            traindatas += [[os.path.join(filepath, 'train', fnames[ii]),
-                            os.path.join(filepath, 'train', fnames[ii+1])]]
+            traindatas += [[os.path.join(filepath, fnames[ii]),
+                            os.path.join(filepath, fnames[ii+1])]]
         trainbatches[i] += traindatas
     return trainbatches
 

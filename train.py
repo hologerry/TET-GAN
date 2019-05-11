@@ -32,9 +32,9 @@ def main():
     tetGAN.train()
 
     print('--- training ---')
-    dataset_path = os.path.join(opts.train_path, opts.dataset_class)
+    dataset_path = os.path.join(opts.train_path, opts.dataset_class, 'train')
     train_size = os.listdir(dataset_path)
-    print('List of %d styles:' % (len(train_size)), *train_size, sep=' ')
+    print('List of %d styles:' % (len(train_size)))
 
     if opts.progressive == 1:
         # proressive training. From level1 64*64, to level2 128*128, to level3 256*256
