@@ -82,13 +82,14 @@ def main():
         for i in range(outer_iter):
             fnames = load_trainset_batchfnames(dataset_path, batchsize)
             for epoch in range(epochs):
-                for fname in fnames:
+                for idx, fname in enumerate(fnames):
                     x, y_real, y = prepare_batch(fname, 1, 1, centercropratio, augementratio, opts.gpu)
                     losses = tetGAN.one_pass(x[0], None, y[0], None, y_real[0], None, 1, 0)
-                print('Iter[%d/%d], Epoch [%d/%d]' %
-                      (i+1, outer_iter, epoch+1, epochs))
-                print('Lrec: %.3f, Ldadv: %.3f, Ldesty: %.3f, Lsadv: %.3f, Lsty: %.3f'
-                      % (losses[0], losses[1], losses[2], losses[3], losses[4]))
+                if (idx+1) % 100 == 0:
+                    print('Epoch [%d/%d], Iter [%d/%d]' %
+                          (epoch+1, epochs, idx, ))
+                    print('Lrec: %.3f, Ldadv: %.3f, Ldesty: %.3f, Lsadv: %.3f, Lsty: %.3f'
+                          % (losses[0], losses[1], losses[2], losses[3], losses[4]))
 
     print('--- save ---')
     torch.save(tetGAN.state_dict(), opts.save_model_name)

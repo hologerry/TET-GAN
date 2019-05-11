@@ -45,18 +45,18 @@ class TrainOptions():
             '--train_path', type=str, default='dataset/', help='path of the training images')
         self.parser.add_argument('--dataset_class', type=str, required=True, help='dataset class')
         # train related
-        self.parser.add_argument('--outer_iter', type=int, default=50,
+        self.parser.add_argument('--outer_iter', type=int, default=1,
                                  help='number of iteration for fading in progressive training')
         self.parser.add_argument(
-            '--epoch', type=int, default=5, help='number of epoch for each outer iteration')
+            '--epoch', type=int, default=10, help='number of epoch for each outer iteration')
         self.parser.add_argument('--progressive', type=int, default=0,
                                  help='1 for using progressive training, 0 for using normal training')
-        self.parser.add_argument('--batchsize', type=int, default=8,
+        self.parser.add_argument('--batchsize', type=int, default=40,
                                  help='batchsize for level3. level3 use batchsize, level2 use 2*batchsize,' +
                                  'level1 use 4*batchsize')
         self.parser.add_argument(
-            '--datasize', type=int, default=12800, help='number of sampled data for each epoch')
-        self.parser.add_argument('--datarange', type=int, default=708,
+            '--datasize', type=int, default=00, help='number of sampled data for each epoch')
+        self.parser.add_argument('--datarange', type=int, default=00,
                                  help='data sampling range for each style (data is sampled from 1.png ~ datarange.png)')
         self.parser.add_argument('--augementratio', type=float,
                                  default=0.25, help='ratio of augmented style during training')
