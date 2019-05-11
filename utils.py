@@ -117,15 +117,9 @@ def load_trainset_batchfnames_origin(filepath, batch_size, usetrainnum=708, trai
     return trainbatches
 
 
-def load_trainset_batchfnames(filepath, batch_size, stylenum=7649):
-    trainnum = (stylenum*26*3 // batch_size // 2) * batch_size * 2
-    chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-    fnames = []
-    for style in range(stylenum):
-        for i in [1, 2, 3]:
-            for char in chars:
-                fname = str(style) + '_' + str(i) + '_' + char + '.png'
-                fnames.append(fname)
+def load_trainset_batchfnames_dualnet(filepath, batch_size):
+    fnames = os.listdir(filepath)
+    trainnum = len(fnames)
     random.shuffle(fnames)
     trainbatches = [([]) for _ in range(trainnum//batch_size//2)]
     for i in range(trainnum//batch_size//2):
