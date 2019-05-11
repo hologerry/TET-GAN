@@ -43,7 +43,7 @@ class TrainOptions():
         # data loader related
         self.parser.add_argument(
             '--train_path', type=str, default='dataset/', help='path of the training images')
-        self.parser.add_argument('--data_class', type=str, required=True, help='dataset class')
+        self.parser.add_argument('--dataset_class', type=str, required=True, help='dataset class')
         # train related
         self.parser.add_argument('--outer_iter', type=int, default=50,
                                  help='number of iteration for fading in progressive training')
