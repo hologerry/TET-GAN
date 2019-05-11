@@ -48,7 +48,7 @@ def weights_init(m):
 # load one image in tensor format
 
 
-def load_image(filename, load_type=0, wd=256, ht=256):
+def load_image(filename, load_type=0, wd=64, ht=64):
     centerCrop = transforms.CenterCrop((wd, ht))
     transform = transforms.Compose([
         transforms.ToTensor(),
@@ -153,7 +153,7 @@ def load_oneshot_batchfnames(filename, batch_size, trainnum=100000):
 # prepare (x,y,y') at target resolution levels
 
 
-def prepare_batch(batchfnames, level=1, jitter=0.0, centercropratio=0.5, augementratio=0.0, gpu=True, wd=256, ht=256):
+def prepare_batch(batchfnames, level=1, jitter=0.0, centercropratio=0.5, augementratio=0.0, gpu=True, wd=64, ht=64):
 
     transform = transforms.Compose([
         transforms.ToTensor(),
@@ -176,7 +176,7 @@ def prepare_batch(batchfnames, level=1, jitter=0.0, centercropratio=0.5, augemen
         img1 = Image.open(fname1)
         img2 = Image.open(fname2)
         ori_wd, ori_ht = img1.size
-        ori_wd = ori_wd // 2
+        ori_wd = ori_wd // 3
         img1_in = img1.crop((0, 0, ori_wd, ori_ht))
         img1_in = text_image_preprocessing_train(img1_in)
         # img1_out = img1.crop((ori_wd, 0, ori_wd*2, ori_ht))

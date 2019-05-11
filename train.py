@@ -41,14 +41,11 @@ def main():
         # level 1
         for i in range(outer_iter):
             jitter = min(1.0, i / fade_iter)
-            fnames = load_trainset_batchfnames(
-                opts.train_path, batchsize*4, datarange, datasize*2)
+            fnames = load_trainset_batchfnames(opts.train_path, batchsize*4, datarange, datasize*2)
             for epoch in range(epochs):
                 for fname in fnames:
-                    x, y_real, y = prepare_batch(fname, 1, jitter,
-                                                 centercropratio, augementratio, opts.gpu)
-                    losses = tetGAN.one_pass(
-                        x[0], None, y[0], None, y_real[0], None, 1, None)
+                    x, y_real, y = prepare_batch(fname, 1, jitter, centercropratio, augementratio, opts.gpu)
+                    losses = tetGAN.one_pass(x[0], None, y[0], None, y_real[0], None, 1, None)
                 print('Level1, Iter[%d/%d], Epoch [%d/%d]' %
                       (i+1, outer_iter, epoch+1, epochs))
                 print('Lrec: %.3f, Ldadv: %.3f, Ldesty: %.3f, Lsadv: %.3f, Lsty: %.3f'
@@ -60,10 +57,8 @@ def main():
                 opts.train_path, batchsize*2, datarange, datasize*2)
             for epoch in range(epochs):
                 for fname in fnames:
-                    x, y_real, y = prepare_batch(fname, 2, 1,
-                                                 centercropratio, augementratio, opts.gpu)
-                    losses = tetGAN.one_pass(
-                        x[0], x[1], y[0], y[1], y_real[0], y_real[1], 2, w)
+                    x, y_real, y = prepare_batch(fname, 2, 1, centercropratio, augementratio, opts.gpu)
+                    losses = tetGAN.one_pass(x[0], x[1], y[0], y[1], y_real[0], y_real[1], 2, w)
                 print('Level2, Iter[%d/%d], Epoch [%d/%d]' %
                       (i+1, outer_iter, epoch+1, epochs))
                 print('Lrec: %.3f, Ldadv: %.3f, Ldesty: %.3f, Lsadv: %.3f, Lsty: %.3f'
@@ -75,10 +70,8 @@ def main():
                 opts.train_path, batchsize, datarange, datasize)
             for epoch in range(epochs):
                 for fname in fnames:
-                    x, y_real, y = prepare_batch(fname, 3, 1,
-                                                 centercropratio, augementratio, opts.gpu)
-                    losses = tetGAN.one_pass(
-                        x[0], x[1], y[0], y[1], y_real[0], y_real[1], 3, w)
+                    x, y_real, y = prepare_batch(fname, 3, 1, centercropratio, augementratio, opts.gpu)
+                    losses = tetGAN.one_pass(x[0], x[1], y[0], y[1], y_real[0], y_real[1], 3, w)
                 print('Level3, Iter[%d/%d], Epoch [%d/%d]' %
                       (i+1, outer_iter, epoch+1, epochs))
                 print('Lrec: %.3f, Ldadv: %.3f, Ldesty: %.3f, Lsadv: %.3f, Lsty: %.3f'
@@ -90,10 +83,8 @@ def main():
             fnames = load_trainset_batchfnames(dataset_path, batchsize)
             for epoch in range(epochs):
                 for fname in fnames:
-                    x, y_real, y = prepare_batch(fname, 1, 1,
-                                                 centercropratio, augementratio, opts.gpu)
-                    losses = tetGAN.one_pass(
-                        x[0], None, y[0], None, y_real[0], None, 3, 0)
+                    x, y_real, y = prepare_batch(fname, 1, 1, centercropratio, augementratio, opts.gpu)
+                    losses = tetGAN.one_pass(x[0], None, y[0], None, y_real[0], None, 1, 0)
                 print('Iter[%d/%d], Epoch [%d/%d]' %
                       (i+1, outer_iter, epoch+1, epochs))
                 print('Lrec: %.3f, Ldadv: %.3f, Ldesty: %.3f, Lsadv: %.3f, Lsty: %.3f'
