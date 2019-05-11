@@ -49,7 +49,7 @@ class TrainOptions():
                                  help='number of iteration for fading in progressive training')
         self.parser.add_argument(
             '--epoch', type=int, default=5, help='number of epoch for each outer iteration')
-        self.parser.add_argument('--progressive', type=int, default=1,
+        self.parser.add_argument('--progressive', type=int, default=0,
                                  help='1 for using progressive training, 0 for using normal training')
         self.parser.add_argument('--batchsize', type=int, default=8,
                                  help='batchsize for level3. level3 use batchsize, level2 use 2*batchsize,' +
@@ -68,6 +68,8 @@ class TrainOptions():
                                  default='save/tetgan.ckpt', help='specify the model name to save')
         self.parser.add_argument(
             '--gpu', type=int, default=1, help='gpu, 0 for cpu, 1 for gpu')
+        self.parser.add_argument('--content_type', type=int, default=0,
+                                 help='0 for distance-based text image, 1 for black and white text image')
 
     def parse(self):
         self.opt = self.parser.parse_args()
