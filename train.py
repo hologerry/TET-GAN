@@ -4,7 +4,6 @@ import torch
 from models import TETGAN
 from utils import (load_trainset_batchfnames_dualnet, prepare_batch, weights_init)
 import os
-os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
 
 def main():
@@ -41,11 +40,11 @@ def main():
         for idx, fname in enumerate(fnames):
             x, y_real, y = prepare_batch(fname, 1, 1, centercropratio, augementratio, opts.gpu)
             losses = tetGAN.one_pass(x[0], None, y[0], None, y_real[0], None, 1, 0)
-        if (idx+1) % 100 == 0:
-            print('Epoch [%d/%d], Iter [%d/%d]' %
-                  (epoch+1, epochs, idx+1, len(fnames)))
-            print('Lrec: %.3f, Ldadv: %.3f, Ldesty: %.3f, Lsadv: %.3f, Lsty: %.3f'
-                  % (losses[0], losses[1], losses[2], losses[3], losses[4]))
+            if (idx+1) % 100 == 0:
+                print('Epoch [%d/%d], Iter [%d/%d]' %
+                      (epoch+1, epochs, idx+1, len(fnames)))
+                print('Lrec: %.3f, Ldadv: %.3f, Ldesty: %.3f, Lsadv: %.3f, Lsty: %.3f'
+                      % (losses[0], losses[1], losses[2], losses[3], losses[4]))
 
         print('--- save ---')
         outname = 'save/' + 'epoch' + str(epoch+1) + '_' + opts.save_model_name
