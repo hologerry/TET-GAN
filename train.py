@@ -76,7 +76,7 @@ def main():
                 print('Lrec: %.3f, Ldadv: %.3f, Ldesty: %.3f, Lsadv: %.3f, Lsty: %.3f'
                       % (losses[0], losses[1], losses[2], losses[3], losses[4]))
         if texture_class and ((epoch+1) % (epochs/20)) == 0:
-            outname = 'save/' + 'val_epoch' + str(epoch+1) + '_' + opts.save_model_name
+            outname = 'save/' + 'val_epoch' + str(epoch+1) + '_' + opts.dataset_class + '_' + opts.save_model_name
             print('--- save model Epoch [%d/%d] ---' % (epoch+1, epochs))
             torch.save(tetGAN.state_dict(), outname)
 
