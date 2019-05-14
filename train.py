@@ -95,7 +95,8 @@ def main():
                     result = tetGAN(val_content, val_sty)
                     if opts.gpu != 0:
                         result = to_data(result)
-                    result_filename = os.path.join(result_dir, str(val_idx))
+                    result_filename = os.path.join(result_dir, str(epoch) + '_' + val_fname)
+                    print(result_filename)
                     save_image(result[0], result_filename)
         elif not texture_class and ((epoch+1) % 2) == 0:
             outname = 'save/' + 'epoch' + str(epoch+1) + '_' + opts.save_model_name
