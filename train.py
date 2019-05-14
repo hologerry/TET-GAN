@@ -75,7 +75,12 @@ def main():
                       (epoch+1, epochs, idx+1, len(fnames)))
                 print('Lrec: %.3f, Ldadv: %.3f, Ldesty: %.3f, Lsadv: %.3f, Lsty: %.3f'
                       % (losses[0], losses[1], losses[2], losses[3], losses[4]))
-        if texture_class and ((epoch+1) % (epochs/10)) == 0:
+        if texture_class and ((epoch+1) % (epochs/20)) == 0:
+            outname = 'save/' + 'val_epoch' + str(epoch+1) + '_' + opts.save_model_name
+            print('--- save model Epoch [%d/%d] ---' % (epoch+1, epochs))
+            torch.save(tetGAN.state_dict(), outname)
+
+            print('--- validating model [%d/%d] ---' % (epoch+1, epochs))
             for val_idx, val_fname in enumerate(val_fnames):
                 v_fname = os.path.join(val_dataset_path, val_fname)
                 random.shuffle(style_fnames)
@@ -92,13 +97,10 @@ def main():
                         result = to_data(result)
                     result_filename = os.path.join(result_dir, str(val_idx))
                     save_image(result[0], result_filename)
-
-        print('--- save ---')
-        if texture_class:
-            outname = 'save/' + 'val_epoch' + str(epoch+1) + '_' + opts.save_model_name
-        else:
+        elif not texture_class and ((epoch+1) % 2) == 0:
             outname = 'save/' + 'epoch' + str(epoch+1) + '_' + opts.save_model_name
-        torch.save(tetGAN.state_dict(), outname)
+            print('--- save model ---')
+            torch.save(tetGAN.state_dict(), outname)
 
 
 if __name__ == '__main__':
