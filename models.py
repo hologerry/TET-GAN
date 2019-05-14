@@ -287,9 +287,9 @@ class TETGAN(nn.Module):
     # FOR TESTING
     # style transfer
     def forward(self, x, y):
-        content_feat = self.S_x(self.E_x(x))
-        style_feat = self.S_y(self.E_ys(y))
-        return self.G_y(content_feat, style_feat)
+        content_feat = self.S_x(self.E_x.forward_level1(x))
+        style_feat = self.S_y(self.E_ys.forward_level1(y))
+        return self.G_y.forward_level1(content_feat, style_feat)
 
     # destylization
     def desty_forward(self, y):

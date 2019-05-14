@@ -63,6 +63,22 @@ def load_image(filename, load_type=0, wd=64, ht=64):
     return img.unsqueeze(dim=0)
 
 
+def load_image_dualnet(filename, load_type=0, wd=64*3, ht=64):
+    transform = transforms.Compose([
+        transforms.ToTensor(),
+        transforms.Normalize(mean=[0.5, 0.5, 0.5], std=[0.5, 0.5, 0.5]),
+    ])
+    img = Image.open(filename)
+    img_content = img.crop((0, 0, 64, 64))
+    if load_type == 0:
+        img = transform(img_content)
+    else:
+        img = text_image_preprocessing_train(img_content)
+        img = transform(img)
+
+    return img.unsqueeze(dim=0)
+
+
 def save_image(img, filename):
     tmp = ((img.numpy().transpose(1, 2, 0) + 1.0) * 127.5).astype(np.uint8)
     cv2.imwrite(filename, cv2.cvtColor(tmp, cv2.COLOR_RGB2BGR))
@@ -117,9 +133,9 @@ def load_trainset_batchfnames_origin(filepath, batch_size, usetrainnum=708, trai
     return trainbatches
 
 
-def load_trainset_batchfnames_dualnet(filepath, batch_size):
+def load_trainset_batchfnames_dualnet(filepath, batch_size, few_size=None):
     fnames = os.listdir(filepath)
-    trainnum = len(fnames)
+    trainnum = len(fnames) if few_size is None else few_size
     random.shuffle(fnames)
     trainbatches = [([]) for _ in range(trainnum//batch_size//2)]
     for i in range(trainnum//batch_size//2):

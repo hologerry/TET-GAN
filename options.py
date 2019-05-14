@@ -64,8 +64,12 @@ class TrainOptions():
             '--centercropratio', type=float, default=0.5, help='ratio of center cropping')
 
         # model related
+        self.parser.add_argument(
+            '--result_dir', type=str, default='output/', help='path for saving result images')
         self.parser.add_argument('--save_model_name', type=str,
                                  default='tetgan.ckpt', help='specify the model name to save')
+        self.parser.add_argument(
+            '--model', type=str, default='save/epoch10_tetgan.ckpt', help='specify the model name to load')
         self.parser.add_argument(
             '--gpu', type=int, default=1, help='gpu, 0 for cpu, 1 for gpu')
         self.parser.add_argument('--content_type', type=int, default=0,
