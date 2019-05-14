@@ -31,6 +31,11 @@ def main():
         tetGAN.cuda()
     tetGAN.init_networks(weights_init)
 
+    num_params = 0
+    for param in tetGAN.parameters():
+        num_params += param.numel()
+    print('Total number of parameters in TET-GAN: %.3f M' % (num_params / 1e6))
+
     print('--- training ---')
     texture_class = 'base_gray_texture' in opts.dataset_class or 'skeleton_gray_texture' in opts.dataset_class
     if texture_class:
